@@ -1,0 +1,17 @@
+/utils
+    ansi_colors.h
+        - Terminal ANSI colors
+    commander.(c/h)
+        - Handles getting user input from stdin and parses and runs commands
+          that it gets from stdin
+    prompt.(c/h)
+        - Handles loading the prompt config file, displays the prompt.
+    tab_completion.(c/h)
+        - Uses ncurses to handle tab completion using the PATH variable
+
+wish.c
+    - Uses the libraries in utils to
+        a) Load configurations
+        b) Display prompt
+        c) Run a command and catch keystrokes like ^C, ^D, <TAB>, etc.
+
