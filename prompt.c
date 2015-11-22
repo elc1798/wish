@@ -104,7 +104,5 @@ void prompt(char *current_working_dir) {
             printf("%c", PROMPT[i]);
         }
     }
-    free(p);
-    free(timeinfo);
 }
 

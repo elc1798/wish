@@ -1,14 +1,10 @@
-#ifndef _WISH_COMMANDER
-#define _WISH_COMMANDER
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
 #include <string.h>
 #include <sys/wait.h>
-
-char *exit_color;
+#include "commander.h"
 
 int execute(char *path, char *arg_arr[]) {
     int pid;
@@ -50,6 +46,4 @@ int get_and_run_userin() {
 
     return execute(args[0], args);
 }
-
-#endif
 
