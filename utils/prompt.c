@@ -16,18 +16,12 @@
 #include "prompt.h"
 
 void load_prompt_defaults() {
-    *PROMPT = "%s@%s (%s):$ ";
-    *PROMPT_VARS = malloc(3 * sizeof(char *));
-    *PROMPT_VARS[0] = "_USERNAME";
-    *PROMPT_VARS[1] = "_HOSTNAME";
-    *PROMPT_VARS[2] = "_CWD";
+    PROMPT = "%u@%h: %d:$ ";
 }
 
-void load_prompt() {
+void load_prompt_config() {
 }
 
 void prompt() {
 }
-
-#endif
 
