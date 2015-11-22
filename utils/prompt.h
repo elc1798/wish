@@ -13,8 +13,11 @@
  * %T       - The time in 12 hour (AM/PM) format
  * %%       - The percent symbol
  *
- * Also, if there is a % at the end of the prompt, it will be implied that it
- * is %%,
+ *
+ * NOTES:
+ *
+ * If there is a % at the end of the prompt, it will be implied that it is %%.
+ * An unrecognized formatting character will be interpretted literally.
  */
 
 char *PROMPT;
