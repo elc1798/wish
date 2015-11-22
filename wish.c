@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "prompt.h"
-#include "ansi_colors.h"
-#include "commander.h"
+#include "utils/prompt.h"
+#include "utils/ansi_colors.h"
+#include "utils/commander.h"
 
 int main() {
     char cwd[1024];

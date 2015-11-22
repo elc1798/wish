@@ -1,3 +1,9 @@
-utils:
-	gcc -o commander -c utils/commander.c
-	gcc -o prompt -c utils/prompt.c
+all:
+	gcc -o wish -I ./utils wish.c utils/commander.c utils/prompt.c
+
+run:
+	./wish
+
+clean:
+	rm wish
+
