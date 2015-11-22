@@ -23,13 +23,18 @@ void load_prompt_defaults() {
 void load_prompt_config() {
 }
 
-void prompt() {
+void prompt(char *current_working_dir) {
     // Declare variables beforehand since C doesn't allow for variable
     // declarations in labels (case)
     struct passwd *p = getpwuid(getuid());
     char hostname[HOST_NAME_MAX + 1];
     time_t rawtime;
     struct tm *timeinfo;
+    // Copy over the working directory because we modify it!
+    char working_dir[strlen(current_working_dir) + 1];
+    memcpy(working_dir, current_working_dir, strlen(current_working_dir) + 1);
+    // Temporary variables
+    int j, levels;
     // Set the time variables to system values
     time(&rawtime);
     timeinfo = localtime(&rawtime);
@@ -53,6 +58,23 @@ void prompt() {
                     }
                     break;
                 case 'd':
+                    if (i + 1 < strlen(PROMPT) &&
+                        PROMPT[i + 1] == '~' &&
+                        '0' <= PROMPT[i + 2] && PROMPT[i + 2] <= '9') {
+                        i += 2; // Increment i
+                        // Start from the back and when the number of levels
+                        // reaches the desired amount, do some string shiftery
+                        levels = 0;
+                        for (j = strlen(working_dir);
+                             j > 0 && levels < PROMPT[i] - '0';
+                             j--) {
+                            if (working_dir[j] == '/') levels++;
+                        }
+                        printf("%s", working_dir + j);
+                    } else {
+                        printf("%s", working_dir);
+                    }
+                    break;
                 case 't':
                     printf("%d:%d:%d",
                             timeinfo->tm_hour,

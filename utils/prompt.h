@@ -9,6 +9,7 @@
  * %h       - The hostname
  * %d~n     - The top n levels of the working directory. If n is not provided
  *            then the entire working directory is displayed. (i.e. %d, %d~2)
+ *            This assumes that 0 <= n <= 9.
  * %t       - The time in 24 hour format
  * %T       - The time in 12 hour (AM/PM) format
  * %%       - The percent symbol
@@ -26,6 +27,6 @@ char *get_format_substitution(char *prompt_var);
 
 void load_prompt_defaults();
 void load_prompt_config();
-void prompt();
+void prompt(char *current_working_dir);
 
 #endif
