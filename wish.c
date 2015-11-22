@@ -7,11 +7,11 @@
 
 int main() {
     char cwd[1024];
-    if (!getcwd(cwd, sizeof(cwd))) return -1;
 
     load_prompt_defaults();
 
     while (1) {
+        if (!getcwd(cwd, sizeof(cwd))) return -1;
         prompt(cwd);
         get_and_run_userin();
     }

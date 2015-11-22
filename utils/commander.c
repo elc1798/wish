@@ -5,6 +5,7 @@
 #include <string.h>
 #include <sys/wait.h>
 #include "commander.h"
+#include "dir_man.h"
 
 int execute(char *path, char *arg_arr[]) {
     int pid;
@@ -44,6 +45,13 @@ int get_and_run_userin() {
     }
     args[num_args] = NULL;
 
+    if (!strcmp(args[0], "cd")) {
+        if (sizeof(args) / sizeof(args[0]) == 2) { // 2 means the array is {"cd", NULL}
+            return chcwd(expand_path("~"));
+        } else {
+            return chcwd(expand_path(args[1]));
+        }
+    }
     return execute(args[0], args);
 }
 
