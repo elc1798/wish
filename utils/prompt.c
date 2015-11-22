@@ -23,5 +23,35 @@ void load_prompt_config() {
 }
 
 void prompt() {
+    // Run through the string and print the prompt with formatting characters
+    struct passwd *p = getpwuid(getuid());
+    char hostname[HOST_NAME_MAX + 1];
+    int i; for (i = 0; i < strlen(PROMPT); i++) {
+        if (PROMPT[i] == '%' && i + 1 < strlen(PROMPT)) {
+            switch(PROMPT[++i]) {
+                case 'u':
+                    if (!p) {
+                        printf("unknown");
+                    } else {
+                        printf("%s", p->pw_name);
+                    }
+                    break;
+                case 'h':
+                    gethostname(hostname, sizeof(hostname));
+                    if (errno) {
+                        printf("unknown");
+                    } else {
+                        printf("%s", hostname);
+                    }
+                    break;
+                case 'd':
+                case 't':
+                case 'T':
+                case '%':
+                default:
+            }
+        }
+    }
+    free(p);
 }
 
