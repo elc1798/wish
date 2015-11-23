@@ -70,27 +70,27 @@ void prompt(char *current_working_dir) {
                              j--) {
                             if (working_dir[j] == '/') levels++;
                         }
-                        printf("%s", working_dir + j);
+                        printf("%s", working_dir + j + 2); // The 2 is 1 for the NULL and 1 for the last /
                     } else {
                         printf("%s", working_dir);
                     }
                     break;
                 case 't':
-                    printf("%d:%d:%d",
+                    printf("%02d:%02d:%02d",
                             timeinfo->tm_hour,
                             timeinfo->tm_min,
                             timeinfo->tm_sec);
                     break;
                 case 'T':
-                    printf("%d:%d:%d %s",
+                    printf("%02d:%02d:%02d %s",
                             (timeinfo->tm_hour % 12 == 0) ?
                             (timeinfo->tm_hour % 12) + 12 :
                             (timeinfo->tm_hour % 12),
                             timeinfo->tm_min,
                             timeinfo->tm_sec,
                             (timeinfo->tm_hour > 11) ?
-                            "AM" :
-                            "PM"
+                            "PM" :
+                            "AM"
                           );
                     break;
                 case '%':
