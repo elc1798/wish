@@ -20,7 +20,7 @@ int execute(char *path, char *arg_arr[]) {
     }
 }
 
-int get_and_run_userin() {
+int get_and_run_userin(int *should_exit) {
     char buff[256];
     fgets(buff, sizeof(buff), stdin);
 
@@ -45,6 +45,7 @@ int get_and_run_userin() {
     }
     args[num_args] = NULL;
 
+    // Special actions for "cd" and "exit"
     if (!strcmp(args[0], "cd")) {
         if (sizeof(args) / sizeof(args[0]) == 2) { // 2 means the array is {"cd", NULL}
             return chcwd(expand_path("~"));
@@ -52,6 +53,12 @@ int get_and_run_userin() {
             return chcwd(expand_path(args[1]));
         }
     }
+
+    if (!strcmp(args[0], "exit")) {
+        *should_exit = 1;
+        return 0;
+    }
+
     return execute(args[0], args);
 }
 

@@ -7,14 +7,17 @@
 
 int main() {
     char cwd[1024];
+    int *should_exit = malloc(sizeof(int));
+    *should_exit = 0; // 0 means should not exit
 
     load_prompt_defaults();
 
-    while (1) {
+    while (!(*should_exit)) {
         if (!getcwd(cwd, sizeof(cwd))) return -1;
         prompt(cwd);
-        get_and_run_userin();
+        get_and_run_userin(should_exit);
     }
+    free(should_exit);
     return 0;
 }
 
