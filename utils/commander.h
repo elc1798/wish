@@ -19,3 +19,14 @@ int get_and_run_userin(int *should_exit);
 
 #endif
 
+#ifndef STDIN_FD
+#define STDIN_FD 0
+#endif
+
+#ifndef STDOUT_FD
+#define STDOUT_FD 1
+#endif
+
+#ifndef STDERR_FD
+#define STDERR_FD 2
+#endif
