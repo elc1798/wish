@@ -1,8 +1,10 @@
 all: commander prompt dirman
-	gcc -o wish -I ./utils wish.c utils/commander.o utils/prompt.o utils/dir_man.o
-	cat README.txt
+	gcc -o wish -I ./utils wish.c utils/grunt.o utils/commander.o utils/prompt.o utils/dir_man.o
 
-commander: utils/commander.c utils/commander.h
+grunt: utils/grunt.c utils/grunt.h
+	gcc -I ./utils -o utils/grunt.o -c utils/grunt.c
+
+commander: grunt utils/commander.c utils/commander.h
 	gcc -I ./utils -o utils/commander.o -c utils/commander.c
 
 prompt: utils/prompt.c utils/prompt.h

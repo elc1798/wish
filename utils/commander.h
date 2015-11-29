@@ -19,14 +19,16 @@ int get_and_run_userin(int *should_exit);
 
 #endif
 
-#ifndef STDIN_FD
-#define STDIN_FD 0
+// Define the standard file constants if not defined
+
+#ifndef STDIN_FILENO
+#define STDIN_FILENO 0
 #endif
 
-#ifndef STDOUT_FD
-#define STDOUT_FD 1
+#ifndef STDOUT_FILENO
+#define STDOUT_FILENO 1
 #endif
 
-#ifndef STDERR_FD
-#define STDERR_FD 2
+#ifndef STDERR_FILENO
+#define STDERR_FILENO 2
 #endif
