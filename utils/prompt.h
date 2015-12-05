@@ -23,10 +23,9 @@
 
 char *PROMPT;
 
-char *get_format_substitution(char *prompt_var);
+//char *get_format_substitution(char *prompt_var);
 
 void load_prompt_defaults();
-void load_prompt_config();
 void prompt(char *current_working_dir);
 
 #endif

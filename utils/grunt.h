@@ -5,6 +5,8 @@
 #ifndef _WISH_GRUNT
 #define _WISH_GRUNT
 
+int should_exit;
+
 int execute(char *path, char *arg_arr[]);
 
 int stdout_to_file_overwrite(char *command[], char *file);
@@ -14,6 +16,7 @@ int stderr_to_file_append(char *command[], char *file);
 int stderr_to_stdout(char *command[]);
 int stdout_to_stderr(char *command[]);
 int file_to_stdin(char *command[], char *file);
+int pipe_of_wish(char *command1[], char *command2[]);
 
 #endif
 

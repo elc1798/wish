@@ -7,7 +7,6 @@
 #include <sys/wait.h>
 #include "commander.h"
 #include "grunt.h"
-#include "dir_man.h"
 
 int get_num_args(char *line) {
     // Get the number of arguments by counting non space chunks
@@ -27,7 +26,7 @@ int get_num_args(char *line) {
     return num_args;
 }
 
-int get_and_run_userin(int *should_exit) {
+int get_and_run_userin() {
     char buff[256];
     fgets(buff, sizeof(buff), stdin);
 
@@ -55,6 +54,10 @@ int get_and_run_userin(int *should_exit) {
 
     int retval;
     int counter; for (counter = 0; counter < num_commands; counter++) {
+        if (!(commands[counter][0])) {
+            retval = 0;
+            continue;
+        }
         // Get the number of arguments from get_num_args
         int num_args = get_num_args(commands[counter]);
 
@@ -69,10 +72,8 @@ int get_and_run_userin(int *should_exit) {
         args[num_args] = NULL;
 
         char *command[num_args];
-        char *command2[num_args];
         int j;
         int redirected = 0;
-        int cding = 0;
         // Check for redirection or pipe symbols 
         for (i = 0; i < num_args; i++) {
             if (!strcmp(args[i], ">")) {
@@ -103,6 +104,13 @@ int get_and_run_userin(int *should_exit) {
                 command[i] = NULL;
                 retval = stderr_to_file_append(command, args[num_args - 1]);
                 redirected = 1;
+            } else if (!strcmp(args[i], "2>1")) {
+                for (j = 0; j < i; j++) {
+                    command[j] = args[j];
+                } 
+                command[i] = NULL;
+                retval = stderr_to_stdout(command);
+                redirected = 1;
             } else if (!strcmp(args[i], "&>")) {
                 retval = stdout_to_stderr(command);
                 redirected = 1;
@@ -114,35 +122,22 @@ int get_and_run_userin(int *should_exit) {
                 retval = file_to_stdin(command, args[num_args - 1]);
                 redirected = 1;
             } else if (!strcmp(args[i], "|")) {
+                char *command1[i + 1];
+                char *command2[num_args - i + 1];
                 for (j = 0; j < i; j++){
-                    command[j] = args[j];
+                    command1[j] = args[j];
                 } 
-                command[i] = NULL;
-                for (j = i + 1; j < num_args; j++){
+                command1[i] = NULL;
+
+                for (j = i + 1; j <= num_args; j++){
                     command2[j - i - 1] = args[j];
                 }
-                command2[j - i] = NULL;
-                //retval = piping(command, command2);
+                retval = pipe_of_wish(command1, command2);
                 redirected = 1;
             } 
         }
 
-        // Special actions for "cd" and "exit"
-        if (!strcmp(args[0], "cd")) {
-            cding = 1;
-            if (sizeof(args) / sizeof(args[0]) == 2) { // 2 means the array is {"cd", NULL}
-                retval = chcwd(expand_path("~"));
-            } else {
-                retval = chcwd(expand_path(args[1]));
-            }
-        }
-
-        if (!strcmp(args[0], "exit")) {
-            *should_exit = 1;
-            return 0;
-        }
-        if (!redirected && !cding) retval = execute(args[0], args);
+        if (!redirected) retval = execute(args[0], args);
     }
     return retval;
 }
-

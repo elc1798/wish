@@ -12,15 +12,12 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 
-// Includes for wish header files
+// Includes for anguish header files
 #include "ansi_colors.h"
 #include "prompt.h"
 
 void load_prompt_defaults() {
     PROMPT = "%u@%h: %d:$ ";
-}
-
-void load_prompt_config() {
 }
 
 void prompt(char *current_working_dir) {
