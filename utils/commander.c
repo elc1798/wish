@@ -74,7 +74,7 @@ int get_and_run_userin() {
         char *command[num_args];
         int j;
         int redirected = 0;
-        // Check for redirection or pipe symbols 
+        // Check for redirection or pipe symbols
         for (i = 0; i < num_args; i++) {
             if (!strcmp(args[i], ">")) {
                 for (j = 0; j < i; j++) {
